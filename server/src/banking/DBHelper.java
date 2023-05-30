@@ -17,32 +17,6 @@ public class DBHelper {
         conn = DriverManager.getConnection(connStr, user, password);
     }
 
-    public void createDb() throws SQLException {
-        var sql1 = "CREATE SCHEMA IF NOT EXISTS demo;";
-        var sql2 = "USE demo;";
-        var st = conn.createStatement();
-        st.addBatch(sql1);
-        st.addBatch(sql2);
-        st.executeBatch();
-    }
-    public void createCustomersTable() throws SQLException {
-        var sql = "CREATE TABLE IF NOT EXISTS customers(" +
-                "phone bigint not null primary key," +
-                "name varchar(200) not null," +
-                "password varchar(512) not null" +
-                ")";
-        conn.createStatement().execute(sql);
-    }
-
-    public void createAccountsTable() throws SQLException {
-        var sql = "CREATE TABLE IF NOT EXISTS accounts(" +
-                "id bigint not null primary key," +
-                "customer_id bigint not null foreign key," +
-                "count bigint not null" +
-                ")";
-        conn.createStatement().execute(sql);
-    }
-
     public void addCustomer(Customer c) throws SQLException {
         var sql = "INSERT INTO customers (customer_phone, customer_name, customer_password) " +
                 "VALUES (?, ?, ?)";
@@ -118,8 +92,6 @@ public class DBHelper {
             c.setId(cursor.getLong("account_id"));
             c.setCustomerId(cursor.getLong("customer_id"));
             c.setCount(cursor.getLong("account_count"));
-
-
 
             return c;
         } else return null;

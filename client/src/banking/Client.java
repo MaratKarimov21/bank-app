@@ -119,7 +119,6 @@ public class Client extends JFrame {
     }
 
     private void loginScreen() {
-
         panel.removeAll();
 
         panel.setLayout(new BorderLayout());
@@ -384,29 +383,6 @@ public class Client extends JFrame {
         d.add(l);
         d.setSize(300, 150);
         d.setVisible(true);
-    }
-
-    private void sendInfo(String[] info) {
-        try {
-            output.writeObject(info);
-            output.flush();
-        } catch(IOException ioException) {
-
-        }
-    }
-
-    private void sendInt(int n) {
-        try {
-            output.writeObject(n);
-            output.flush();
-        } catch(IOException ioException) { }
-    }
-
-    private void sendUserPass(String userpass) {
-        try {
-            output.writeObject(userpass);
-            output.flush();
-        } catch(IOException ioException) { }
     }
 
     private void sendLogin(LoginForm form) {
