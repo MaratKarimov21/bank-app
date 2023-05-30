@@ -105,15 +105,20 @@ public class ServerThread implements Runnable {
     }
 
     public void recieve(TransactionForm form) throws IOException, ClassNotFoundException, SQLException {
+
+
         Account from = base.getAccountById(form.getFromId());
         Account to = base.getAccountById(form.getToId());
-        Customer c = base.doTransaction(from, to, form.getAmount());
-        c.setAccounts(base.getAccounts(c));
 
-        System.out.println(c.getAccounts());
+        if (customer.getPhone() == from.getCustomerId()) {
+            Customer c = base.doTransaction(from, to, form.getAmount());
+            c.setAccounts(base.getAccounts(c));
 
-        sendCustomer(c);
-        customer = c;
+            sendCustomer(c);
+        } else {
+            ErrorMessage err = new ErrorMessage("not your account!");
+            sendErrorMessage(err);
+        }
     }
 
     public void recieve(int n) throws IOException {
@@ -146,6 +151,13 @@ public class ServerThread implements Runnable {
     private void sendCustomer(Customer c) {
         try {
             output.writeObject(c);
+            output.flush();
+        } catch(IOException ioException) { };
+    }
+
+    private void sendErrorMessage(ErrorMessage err) {
+        try {
+            output.writeObject(err);
             output.flush();
         } catch(IOException ioException) { };
     }

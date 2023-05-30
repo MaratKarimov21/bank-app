@@ -16,17 +16,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-
+import javax.swing.*;
 
 
 public class Client extends JFrame {
@@ -42,6 +32,8 @@ public class Client extends JFrame {
     // set up frame details
     public Client() {
         super("Client");
+
+
 
         setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -379,9 +371,19 @@ public class Client extends JFrame {
                 if(o instanceof Customer) {
                     customer = (Customer) o;
                     loginScreen();
+                } else if(o instanceof ErrorMessage) {
+                    showError((ErrorMessage) o);
                 }
             } catch (ClassNotFoundException classNotFoundException) { };
         } while(flag);
+    }
+
+    private void showError(ErrorMessage err) {
+        JDialog d = new JDialog(this, "Error");
+        JLabel l = new JLabel(err.message);
+        d.add(l);
+        d.setSize(300, 150);
+        d.setVisible(true);
     }
 
     private void sendInfo(String[] info) {
