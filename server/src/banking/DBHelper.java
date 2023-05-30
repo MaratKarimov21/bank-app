@@ -123,7 +123,6 @@ public class DBHelper {
             conn.rollback();
             return null;
         }
-
     }
 
     public void clearAll() throws SQLException {
