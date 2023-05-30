@@ -29,7 +29,7 @@ public class Main {
 //
 
 //        Customer c1 = new Customer();
-//        c1.setPhone(12345678L);
+//        c1.setPhone(89872218378L);
 //        c1.setName("dodo");
 //        c1.setPassword("toto");
 //

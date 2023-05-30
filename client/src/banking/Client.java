@@ -61,7 +61,7 @@ public class Client extends JFrame {
 
         // background picture
         JLabel background = new JLabel();
-        background.setIcon(new ImageIcon(getClass().getResource("bg.jpeg")));
+        background.setIcon(new ImageIcon(getClass().getResource("img.png")));
         background.setLayout(new BorderLayout());
 
         // transparant panel
@@ -125,7 +125,7 @@ public class Client extends JFrame {
         panel.setLayout(new BorderLayout());
 
         JLabel background = new JLabel();
-        background.setIcon(new ImageIcon(getClass().getResource("bg.jpeg")));
+        background.setIcon(new ImageIcon(getClass().getResource("img.png")));
         background.setLayout(new BorderLayout());
 
         final JPanel content = new JPanel();
@@ -254,7 +254,7 @@ public class Client extends JFrame {
         panel.setLayout(new BorderLayout());
 
         JLabel background = new JLabel();
-        background.setIcon(new ImageIcon(getClass().getResource("bg.jpeg")));
+        background.setIcon(new ImageIcon(getClass().getResource("img.png")));
         background.setVisible(false);
 
         // Information form components

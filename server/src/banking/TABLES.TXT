@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS customers;
 DROP TABLE IF EXISTS accounts;
 
 CREATE TABLE customers(
-   customer_phone INT PRIMARY KEY,
+   customer_phone BIGINT PRIMARY KEY,
    customer_name VARCHAR(255) NOT NULL,
    customer_password VARCHAR(255) NOT NULL
 );
@@ -10,5 +10,5 @@ CREATE TABLE customers(
 CREATE TABLE accounts(
    account_id INT GENERATED ALWAYS AS IDENTITY,
    account_count INT NOT NULL,
-   customer_id INT
+   customer_id BIGINT
 );

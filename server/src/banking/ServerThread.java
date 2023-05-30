@@ -28,16 +28,7 @@ public class ServerThread implements Runnable {
             try {
                 o = input.readObject();
                 System.out.println(o.toString());
-                if(o instanceof String[]) {
-                    recieve((String[]) o);
-                }
-                else if(o instanceof Integer) {
-                    recieve((Integer) o);
-                }
-                else if(o instanceof String) {
-                    recieve((String) o);
-                }
-                else if(o instanceof LoginForm) {
+               if(o instanceof LoginForm) {
                     recieve((LoginForm) o);
                 }
                 else if(o instanceof RegistrationForm) {
@@ -56,57 +47,48 @@ public class ServerThread implements Runnable {
         }
     }
 
-    public void recieve(String[] info) throws IOException, ClassNotFoundException {
-//        Person p = new Person(info[0], info[1], base.getNum(), info[2], info[3], info[4]);
-//        base.addPerson(p);
-    }
 
     public void recieve(LoginForm login) throws IOException, ClassNotFoundException, SQLException {
-
         Customer c = base.getCustomerByPhone(login.getPhone());
 
-        System.out.println(c);
         if (c != null && c.getPassword().equals(login.getPassword())) {
-            System.out.println("get accs");
             c.setAccounts(base.getAccounts(c));
             sendCustomer(c);
             customer = c;
         } else {
             System.out.println("not found");
-            // обработка ненайденного юзера
+            ErrorMessage err = new ErrorMessage("Customer not found!");
+            sendErrorMessage(err);
         }
     }
 
     public void recieve(RegistrationForm form) throws Exception {
-        System.out.println("recieve");
+        if (form.validateAll()) {
+            Customer c = new Customer();
+            c.setPhone(form.getPhone());
+            c.setName(form.getName());
+            c.setPassword(form.getPassword());
 
-        Customer c = new Customer();
-        c.setPhone(form.getPhone());
-        c.setName(form.getName());
-        c.setPassword(form.getPassword());
+            Account acc = new Account();
 
-        Account acc = new Account();
+            acc.setCustomerId(c.getPhone());
+            acc.setCount(100L); // by default
+            c.addAccount(acc);
 
-        acc.setCustomerId(c.getPhone());
-        acc.setCount(100L); // by default
-        c.addAccount(acc);
+            System.out.println("saving");
 
-        System.out.println("saving");
+            base.addCustomer(c);
+            base.addAccount(acc);
 
-        base.addCustomer(c);
-        base.addAccount(acc);
-
-
-
-        System.out.println(c);
-
-        sendCustomer(c);
-        customer = c;
+            sendCustomer(c);
+            customer = c;
+        } else {
+            ErrorMessage err = new ErrorMessage("Data is invalid!");
+            sendErrorMessage(err);
+        }
     }
 
     public void recieve(TransactionForm form) throws IOException, ClassNotFoundException, SQLException {
-
-
         Account from = base.getAccountById(form.getFromId());
         Account to = base.getAccountById(form.getToId());
 
@@ -119,33 +101,6 @@ public class ServerThread implements Runnable {
             ErrorMessage err = new ErrorMessage("not your account!");
             sendErrorMessage(err);
         }
-    }
-
-    public void recieve(int n) throws IOException {
-//        if(n > 0) {
-//            person.getAccount().deposit(n);
-//            sendPerson(person);
-//        }
-//        else if(n < 0) {
-//            person.getAccount().withdraw(n*-1);
-//            sendPerson(person);
-//        }
-//        else { }
-
-    }
-
-    public void recieve(String s) throws IOException, ClassNotFoundException {
-//        if(base.hasPerson(s)) {
-//            sendPerson(base.getPerson(s));
-//            person = base.getPerson(s);
-//        }
-    }
-
-    private void sendPerson(Person p) {
-        try {
-            output.writeObject(p);
-            output.flush();
-        } catch(IOException ioException) { };
     }
 
     private void sendCustomer(Customer c) {
@@ -173,7 +128,6 @@ public class ServerThread implements Runnable {
     private ObjectOutputStream output;
     private ObjectInputStream input;
 
-    private ArrayList<Person> newAccounts;
     private DBHelper base;
     private Customer customer;
 }

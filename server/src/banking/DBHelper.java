@@ -59,7 +59,6 @@ public class DBHelper {
         var st = conn.prepareStatement(sql);
         st.setLong(1, acc.getCustomerId());
         st.setLong(2, acc.getCount());
-
         st.executeUpdate();
     }
 

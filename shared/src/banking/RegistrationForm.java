@@ -1,6 +1,19 @@
 package banking;
 
 public class RegistrationForm implements java.io.Serializable {
+
+    public boolean validatePhone() {
+        return String.valueOf(phone).length() == 11;
+    }
+    public boolean validatePassword() {
+        return password.length() >= 6;
+    }
+    public boolean validateName() {
+        return name.length() >= 4;
+    }
+    public boolean validateAll() {
+        return validatePhone() && validateName() && validatePassword();
+    }
     public long getPhone() {
         return phone;
     }
