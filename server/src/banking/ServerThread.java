@@ -1,5 +1,6 @@
 package banking;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -53,6 +54,9 @@ public class ServerThread implements Runnable {
 
         if (c != null && c.getPassword().equals(login.getPassword())) {
             c.setAccounts(base.getAccounts(c));
+            var accountsList = base.getAllAccounts();
+            String[] stringArray = accountsList.toArray(new String[0]);
+            c.setPossibleAccountIds(stringArray);
             sendCustomer(c);
             customer = c;
         } else {
@@ -73,12 +77,19 @@ public class ServerThread implements Runnable {
 
             acc.setCustomerId(c.getPhone());
             acc.setCount(100L); // by default
-            c.addAccount(acc);
+            //c.addAccount(acc);
 
             System.out.println("saving");
 
             base.addCustomer(c);
             base.addAccount(acc);
+
+            c.setAccounts(base.getAccounts(c));
+
+            var accountsList = base.getAllAccounts();
+            String[] stringArray = accountsList.toArray(new String[0]);
+            c.setPossibleAccountIds(stringArray);
+            sendCustomer(c);
 
             sendCustomer(c);
             customer = c;

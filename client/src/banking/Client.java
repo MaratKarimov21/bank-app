@@ -176,7 +176,7 @@ public class Client extends JFrame {
                 content.add(from);
 
                 content.add(new JLabel("To ID:"));
-                final JTextField to = new JTextField(10);
+                JComboBox to = new JComboBox(customer.getPossibleAccountIds());
                 content.add(to);
 
                 content.add(new JLabel("Amount:"));
@@ -187,7 +187,7 @@ public class Client extends JFrame {
                     public void actionPerformed(ActionEvent ae) {
                         long amountValue = Long.parseLong(amount.getText());
                         long fromValue = Long.parseLong(from.getText());
-                        long toValue = Long.parseLong(to.getText());
+                        long toValue = Long.parseLong(String.valueOf(to.getSelectedItem()));
 
 
                         if (amountValue > 0) {

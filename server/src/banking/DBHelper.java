@@ -13,7 +13,7 @@ public class DBHelper {
             String user,
             String password
     ) throws SQLException {
-        var connStr = "jdbc:postgresql://" + host + ":" + port + "/demo";
+        var connStr = "jdbc:mysql://" + host + ":" + port + "/demo";
         conn = DriverManager.getConnection(connStr, user, password);
     }
 
@@ -66,6 +66,17 @@ public class DBHelper {
             accounts.add(acc);
         }
         return accounts;
+    }
+
+    public ArrayList<String> getAllAccounts() throws SQLException {
+        var accountIds = new ArrayList<String>();
+        var sql = "SELECT * FROM accounts";
+        var st = conn.prepareStatement(sql);
+        var cursor = st.executeQuery();
+        while (cursor.next()){
+            accountIds.add(String.valueOf(cursor.getLong("account_id")));
+        }
+        return accountIds;
     }
 
     public Customer getCustomerByPhone(long phone) throws SQLException {

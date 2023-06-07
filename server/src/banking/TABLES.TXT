@@ -8,7 +8,7 @@ CREATE TABLE customers(
 );
 
 CREATE TABLE accounts(
-   account_id INT GENERATED ALWAYS AS IDENTITY,
+   account_id INT AUTO_INCREMENT PRIMARY KEY,
    account_count INT NOT NULL,
    customer_id BIGINT
 );

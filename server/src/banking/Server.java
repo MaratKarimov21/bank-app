@@ -100,7 +100,7 @@ public class Server {
 
     //Frame Variables
     private JPanel panel;
-    private DBHelper base = new DBHelper("localhost", 5433, "demo", "");
+    private DBHelper base = new DBHelper("localhost", 3306, "root", "");
     private JTextArea area;
 
     //Server Variables

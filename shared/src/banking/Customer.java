@@ -8,6 +8,17 @@ public class Customer implements java.io.Serializable {
     private String name;
     private String password;
 
+    public String[] getPossibleAccountIds() {
+        return possibleAccountIds;
+    }
+
+    public void setPossibleAccountIds(String[] possibleAccountIds) {
+        this.possibleAccountIds = possibleAccountIds;
+    }
+
+    private String[] possibleAccountIds;
+
+
     private ArrayList<Account> accounts = new ArrayList<Account>();
 
     public ArrayList<Account> addAccount(Account acc) {
